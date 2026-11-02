@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: card
+      POSTGRES_PASSWORD: card
+      POSTGRES_DB: digital_card
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://card:card@db:5432/digital_card
+    depends_on:
+      - db
+volumes:
+  pgdata:
